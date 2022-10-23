@@ -72,7 +72,43 @@ auditPol /get /category:*
 ![image](https://user-images.githubusercontent.com/53142047/197388137-6534cc91-1716-4d4b-8a02-af04107478ee.png)
 
 
+## Configure System Audit Policies
 
+`Computer Configuration > Policies > Windows Settings > Security Settings > Advanced Audit Policy Configuration > Audit Policies`
 
+| __Account Logon__ | __Setting__ |
+|-----------------|-----------|
+| Credential Validation | Success and Failure |
+| Other Account Login Events | Success and Failure |
+| __Account Management__ | __Setting__ |
+| Application Group Management | Success and Failure |
+| Computer Account Management | Success and Failure |
+| Distribution Group Management | Success and Failure |
+| Other Acct Management Events | Success and Failure |
+| Security Group Management | Success and Failure |
+| User Account Management | Success and Failure |
+|  __Detailed Tracking__ | __Setting__ |
+| DPAPI Activity | No Auditing |
+| Plug and Play | Success |
+| Process Creation | Success and Failure |
+| Process Termination | No Auditing |
+| RPC Events | Success and Failure |
+| Audit Token Right Adj | Success |
+| __DS Access__ | __Setting__ |
+| Detailed Directory Service Repl | No Auditing |
+| Directory Service Access | No Auditing |
+| Directory Service Changes | Success and Failure |
+| Directory Service Replication | No Auditing |
+| __Logon/Logoff__ | __Setting__ |
+| Account Lockout | Success |
+| User / Device Claims | No Auditing |
+| Group Membership | Success |
+| IPsec Extended Mode | No Auditing |
+| IPsec Main Mode | No Auditing |
+| IPsec Quick Mode | No Auditing |
+| Logoff | Success |
+| Logon | Success and Failure |
+| Network Policy Server | Success and Failure |
+| Other Logon/Logoff Events | Success and Failure |
+| Special Logon | Success and Failure |
 
-## System Audit Policies
