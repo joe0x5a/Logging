@@ -8,7 +8,7 @@ Enable DNS diagnostic logging
 Type `eventvwr.msc` at an elevated command prompt and press ENTER to open Event Viewer.
 In Event Viewer, navigate to `Applications and Services Logs\Microsoft\Windows\DNS-Server`.
 
-Right-click DNS-Server, point to View, and then click Show Analytic and Debug Logs. The Analytical log will be displayed.
+Right-click DNS-Server, point to View, and then click `Show Analytic and Debug Logs`. The Analytical log will be displayed.
 
 Right-click `Analytical` and then click `Properties`.
 
