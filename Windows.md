@@ -146,4 +146,5 @@ auditPol /get /category:*
 
 
 
-## File Audit Access Using Security Templates
+## Audit File Access 
+Audit locations which are known to be abused
