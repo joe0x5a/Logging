@@ -144,3 +144,6 @@ auditPol /get /category:*
 | Security System Extension | Success and Failure |
 | System Integrity | Success and Failure |
 
+
+
+## File Audit Access Using Security Templates
