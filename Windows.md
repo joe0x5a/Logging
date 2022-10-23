@@ -111,4 +111,36 @@ auditPol /get /category:*
 | Network Policy Server | Success and Failure |
 | Other Logon/Logoff Events | Success and Failure |
 | Special Logon | Success and Failure |
+| __Object Access__ | __Setting__ |
+| Application Generated | Success and Failure |
+| Certification Services | Success and Failure |
+| Detailed File Share | Success |
+| File Share | Success and Failure |
+| File System | Success |
+| Filtering Platform Connection | Success |
+| Filtering Platform Packet Drop | No Auditing |
+| Handle Manipulation | No Auditing |
+| Kernel Object | No Auditing |
+| Other Object Access Events | No Auditing |
+| Registry | Success |
+| Removable Storage | Success and Failure |
+| SAM | Success |
+| Central Policy Staging | No Auditing |
+| __Policy Change__ | __Setting__ |
+| Audit Policy Change | Success and Failure
+| Authentication Policy Change | Success and Failure |
+| Authorization Policy Change | Success and Failure |
+| Filtering Platform Policy Change | Success |
+| MPSSVC Rule-Level Policy Change | No Auditing |
+| Other Policy Change Events | No Auditing |
+| __Privilege Use__ | __Setting__ |
+| Non Sensitive Privilege Use | No Auditing |
+| Other Privilege Use Events | No Auditing |
+| Sensitive Privilege Use | Success and Failure |
+| __System__ | __Setting__ |
+| IPsec Driver | Success |
+| Other System Events | Failure |
+| Security State Change | Success and Failure |
+| Security System Extension | Success and Failure |
+| System Integrity | Success and Failure |
 
