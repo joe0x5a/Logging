@@ -72,7 +72,7 @@ auditPol /get /category:*
 ![image](https://user-images.githubusercontent.com/53142047/197388137-6534cc91-1716-4d4b-8a02-af04107478ee.png)
 
 
-## Configure System Audit Policies
+## Configure Advanced Audit Policies
 
 `Computer Configuration > Policies > Windows Settings > Security Settings > Advanced Audit Policy Configuration > Audit Policies`
 
