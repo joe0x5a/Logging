@@ -17,7 +17,7 @@ Under `When maximum event log size is reached`, choose either:
 `Overwrite events as needed`
 `Archive the log when full, do not overwrite events`
 
-*note* DNS logging is very verbose and will consume a lot of disk. Be sure to have a method of managing logs if you dont use the overwrite option.  For the purpose of this lab I will set the log to overwrite.
+*NOTE*: DNS logging is very verbose and will consume a lot of disk. Be sure to have a method of managing logs if you dont use the overwrite option.  For the purpose of this lab I will set the log to overwrite.
 
 Select the `Enable logging` checkbox, and click `OK` when you are asked if you want to enable this log.
 
