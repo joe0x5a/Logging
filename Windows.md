@@ -148,3 +148,93 @@ auditPol /get /category:*
 
 ## Audit File Access 
 Audit locations which are known to be abused
+
+
+## Powershell Logging (Version 5)
+Notes from https://www.mandiant.com/resources/blog/greater-visibilityt
+
+Logging is configured through Group Policy
+` Administrative Templates > Windows Components > Windows POwershell`
+
+![image](https://user-images.githubusercontent.com/53142047/198684111-42a360cc-dc39-42c6-a598-07ac1e0bec3e.png)
+
+Powershell supports 3 types of logging:
+- Module Logging
+- Script Block Logging
+- Transcription
+
+All three write the events to `%SystemRoot%\System32\Winevt\Logs\Microsoft-Windows-PowerShell%4Operational.evtx`
+This log can be opened in  Event Viewer byt navigating to `Application and #services Logs > Microsoft > Windows > Powershell > Operational`
+
+### Module Logging
+Module logging records: 
+- pipeline execution details as PowerShell executes, including variable initialization
+- command invocations. 
+
+Module logging will record portions of scripts, some de-obfuscated code, and some data formatted for output. This logging will capture some details missed by other PowerShell logging sources, though it may not reliably capture the commands executed. Module logging has been available since PowerShell 3.0. Module logging events are written to Event ID (EID) 4103.
+
+While module logging generates a large volume of events (the execution of the popular Invoke-Mimikatz script generated 2,285 events resulting in 7 MB of logs during testing), these events record valuable output not captured in other sources.
+
+__To enable Module Logging__
+- In the Windows POwershell GPO set `Turn on Module Logging` to `enabled` 
+- In the Optons pane, click the button to  show Module Name.
+- In the Module Names window enter * to all  modules are in scope.
+- Click OK, then OK again.
+
+Alternative method: Configure the setting in the registry.
+`HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging → EnableModuleLogging = 1`
+`HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging \ModuleNames → * = *`
+
+
+### Script Block Logging
+Script block logging records blocks of code as they are executed. It will record the obfuscated and deobfuscated version of the code.
+Script block logging events are recorded in EID 4104.
+Script blocks exceeding the maximum length of an event log message are fragmented into multiple entries. (32kb)
+A script at https://github.com/matthewdunwoody/block-parser can be used to reasemble fragmented blocks.
+
+Powershell 5.0 will log code blocks if they match a suspicious command or scripting techniqiue, even if  Script Block Logging is not enabled. These suspicious blocks are logged at the “warning” level in EID 4104, unless script block logging is explicitly disabled.
+
+Script block logging generates fewer events than module logging (Invoke-Mimikatz generated 116 events totaling 5 MB)
+
+Group Policy also offers the option to  `Log script block execution start / stop events`. his option records the start and stop of script blocks, by script block ID, in EIDs 4105 and 4106. Provides grater forensic evidence but can generate a prohibitively large  number of events. 96,458 events totaling 50 MB per execution of Invoke-Mimikatz.  This option is not generally  recommended for most environments.
+
+__To Enable Script Block Logging__
+- In the Windows POwershell GPO set `Turn on Powershell Script Block Logging` to `enabled` and do not configure  the `Log script block execution start / stop events`
+
+Alternative Method: Configure the settings in the registry.
+`HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging → EnableScriptBlockLogging = 1`
+
+
+### Transcription 
+Transcription creates a unique record of every PowerShell session, including all input and output, exactly as it appears in the console session. 
+Transcripts are written to text files, broken out by user and session. Transcripts also contain timestamps and metadata for each command in order to aid analysis.
+Transcription only shows what appears in the terminal, so will not see the contents of executed scripts, or output which is written to anywhere other than the terminal (eg filesystem)
+
+Transcripts are by default written to  the users Documents folder and will have a name beginning with "Powershell_transcript".  It is better to write the transcripts to a write-only network share, so an attacker cannot easily  delete the log. 
+
+Transcripts are storage efficient, Les than 6kb for  an execution of Invoke-Mimikatz.
+
+__To Enable Transcription__
+-  In the “Windows PowerShell” GPO settings, set `Turn on PowerShell Transcription` to enabled.
+-  Check the “Include invocation headers” box, in order to record a timestamp for each command executed.
+-  Optional, send the logs to a central write-only share
+
+Alternative Method: Configure the settings in the registry.
+`HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription → EnableTranscripting = 1`
+`HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription → EnableInvocationHeader = 1`
+`HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription → OutputDirectory = “” (Enter path. Empty = default)`
+
+
+## Log Settings
+- Where possible, configure all three settings
+- In environments where log sizes cannot be significantly increased, enabling script block logging and transcription will record most activity, while minimizing the amount of log data generated.
+- At a minimum, script block logging should be enabled
+
+The size of the  Powershell event log should be increased to 1GB as a minimum.  Powershell logging can generate logs at a rate of 1MB per minute
+
+The Windows Remote Management (WinRM) log, Microsoft-Windows-WinRM%4Operational.evtx, records inbound and outbound WinRM connections, including PowerShell remoting connections. The log captures the source (inbound connections) or destination (outbound connections), along with the username used to authenticate. This connection data can be valuable in tracking lateral movement using PowerShell remoting. Ideally, the WinRM log should be set to a sufficient size to store at least one year of data.
+
+ue to the large number of events generated by PowerShell logging, organizations should carefully consider which events to forward to a log aggregator.
+
+In environments with PowerShell 5.0, organizations should consider, at a minimum, aggregating and monitoring suspicious script block logging events, EID 4104 with level “warning”, in a SIEM or other log monitoring tool. These events provide the best opportunity to identify evidence of compromise while maintaining a minimal dataset.
+
