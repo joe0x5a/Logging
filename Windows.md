@@ -144,6 +144,21 @@ auditPol /get /category:*
 | Security System Extension | Success and Failure |
 | System Integrity | Success and Failure |
 
+## Log the Commandline of Process Creation Events
+Process Creation (sucess and failure) has already been configured. While this will show the process, but it wont show any parameters / switches.
+
+![image](https://user-images.githubusercontent.com/53142047/201486938-e571d394-c335-4d84-a2e8-d44c3a0b0bce.png)
+
+The Process command line section is blank.
+
+In Group Policy Editor, Auditing of Process Creation can be enabled by configuring:
+`Computer Configuration > Policies > Administrative Templates > System > Audit Process Creation > Include Commandline in process creation events'
+
+![image](https://user-images.githubusercontent.com/53142047/201487327-6c9e95c9-2d15-4df1-bc26-9ea04f8a1a54.png)
+
+Now the full command line is audited, and the analyst has better visibility
+
+![image](https://user-images.githubusercontent.com/53142047/201487406-caaf29ad-6515-4756-983d-c008d5c881d3.png)
 
 
 ## Audit File Access 
