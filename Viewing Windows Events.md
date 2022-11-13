@@ -1,5 +1,6 @@
-# Viewing windows Events
+# Viewing Windows Events
 Methods to view Windows Events
+EVTX Samples are from https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES
 
 ## Event Viewer
 
