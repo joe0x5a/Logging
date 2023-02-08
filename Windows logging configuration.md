@@ -152,7 +152,7 @@ Process Creation (sucess and failure) has already been configured. While this wi
 The Process command line section is blank.
 
 In Group Policy Editor, Auditing of Process Creation can be enabled by configuring:
-`Computer Configuration > Policies > Administrative Templates > System > Audit Process Creation > Include Commandline in process creation events'
+`Computer Configuration > Policies > Administrative Templates > System > Audit Process Creation > Include Commandline in process creation events`
 
 ![image](https://user-images.githubusercontent.com/53142047/201487327-6c9e95c9-2d15-4df1-bc26-9ea04f8a1a54.png)
 
